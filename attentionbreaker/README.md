@@ -38,6 +38,12 @@ Indices supplied through `--blocked-indices` are excluded from both matrix
 ranking and candidate construction. The repository does not contain historical
 indices; an omitted option starts from an empty blocked set.
 
+The optimized indices produced by a completed run are added to
+`blocked_indices_latest.json` and excluded from later runs. This file records
+blocked search positions; it is not automatically labeled as an effective
+protection set. To continue the iterative screening process, pass the saved file
+to the next run with `--blocked-indices`.
+
 ## Repository layout
 
 ```text
@@ -145,7 +151,6 @@ percentage.
   loss-sample indices, 5% ranking fraction, 2% candidate fraction, loss
   threshold, population settings, and random seed. `run_summary.json` stores the
   complete command configuration used for each run.
-- Confirm the upstream AttentionBreaker license before publishing a derivative
-  repository publicly. A private repository shared with a supervisor avoids
-  prematurely redistributing code under an unknown license.
+- Confirm the upstream AttentionBreaker license and redistribution terms before
+  publishing or redistributing modified upstream code.
 

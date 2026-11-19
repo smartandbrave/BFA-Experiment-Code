@@ -1,6 +1,6 @@
 # BFA Experiment Code
 
-This private review bundle contains three independent experiment directories:
+This public research repository contains three experiment directories:
 
 - `silentstriker_iterative_screening`: progressive INT8 bit search with iterative index exclusion;
 - `attentionbreaker`: seven-projection matrix sensitivity analysis and GenBFA optimization;
@@ -9,8 +9,13 @@ This private review bundle contains three independent experiment directories:
 Each directory contains its own English `README.md`, minimal `requirements.txt`,
 installation instructions, example commands, parameter descriptions, and output
 definitions. Install and run each experiment from inside its corresponding
-directory. Model weights, access tokens, historical screened indices, and
+directory. Model weights, access tokens, historical blocked-position files, and
 generated experiment results are intentionally excluded.
+
+In all three workflows, positions selected during a completed search round are
+added to a blocked-position set and excluded from later rounds. These positions
+are reported as blocked search positions; the programs do not automatically
+label them as effective protection parameters.
 
 The code simulates model-weight bit flips for authorized research. It does not
 implement a physical fault-injection mechanism.

@@ -272,11 +272,6 @@ def run(args: argparse.Namespace) -> None:
                     "new_blocked_count": sum(len(v) for v in round_new.values()),
                     "total_blocked_count": count_indices(global_blocked),
                     "generated_outputs": generated_outputs,
-                    "attack_success": None,
-                    "note": (
-                        "attack_success is intentionally unset; provide a semantic output "
-                        "evaluator before treating these positions as an effective protection set."
-                    ),
                 },
             )
         finally:

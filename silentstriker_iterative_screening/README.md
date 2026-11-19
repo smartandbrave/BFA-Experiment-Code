@@ -5,19 +5,18 @@ This repository extension repeatedly runs SilentStriker Progressive Bit Search
 remaining sensitive positions that can still be identified.
 
 The program implements **iterative search and index blocking**. Every position
-actually selected in a completed round is added to the blocked set, regardless
-of whether the generated response is later judged successful. The generated
-responses are saved for manual review. The program does not implement physical
-memory protection and does not automatically label blocked positions as an
-effective protection set.
+actually selected in a completed round is added to the blocked set. Generated
+responses are saved with the corresponding round record. The program does not
+implement physical memory protection and reports the selected positions only as
+a search-blocking set.
 
 ## Relationship to SilentStriker
 
 This code is an extension of the INT8 workflow in the official
 [SilentStriker repository](https://github.com/HaotianXu1/SilentStriker). The two
 customized loss implementations used by this experiment are included as
-`loss_1.py` and `loss_2.py`. Upstream attribution and licensing still need to be
-confirmed before public release.
+`loss_1.py` and `loss_2.py`. Upstream attribution, licensing, and redistribution
+terms must be confirmed for the public repository.
 
 ## Main differences from the experiment script
 
@@ -164,25 +163,14 @@ Each JSONL record contains:
 - every accepted loss-decreasing PBS step;
 - parameter positions newly blocked in that round;
 - the accumulated blocked-position count;
-- generated outputs for later semantic evaluation;
-- `attack_success: null`, indicating that the stored output awaits manual review.
+- generated outputs produced after the round.
 
 ## Interpreting the output
 
-`blocked_indices_latest.json` is a **search-blocking set**. It contains positions
-excluded from future PBS rounds. It must not be reported as an effective
-protection set without evaluating whether the corresponding round actually
-achieved the SilentStriker attack objective.
-
-A complete result table can be produced by manually labeling each round as:
-
-- no semantic error;
-- partially incorrect output; or
-- completely incorrect output.
-
-The search program blocks every completed round. During result analysis, only
-rounds that satisfy the experiment's attack-success criterion should contribute
-to the reported effective set recommended for protection.
+`blocked_indices_latest.json` is a **search-blocking set**. It contains every
+position selected during completed PBS rounds and excludes those positions from
+later searches. The program reports these values as blocked positions and does
+not automatically convert them into an effective protection set.
 
 ## Reproducibility notes
 
@@ -190,17 +178,15 @@ to the reported effective set recommended for protection.
 - The implementation relies on bitsandbytes internal INT8 buffers (`CxB` and
   `SCB`) and is therefore version-sensitive.
 - The full-precision and quantized model copies require substantial GPU memory.
-- Generated outputs should be reviewed before publishing result logs.
 - To reproduce a reported run, use the same model revision, attack-question
   JSON, spaCy model, random seed, early-stop threshold, and initial blocked-index
-  file. The program intentionally leaves `attack_success` unset because the
-  experiment used manual semantic review of generated answers.
+  file.
 
 ## License and redistribution
 
-Before making this repository public, confirm the upstream SilentStriker license
-or obtain permission from the authors. Do not add a new license that conflicts
-with the rights of the upstream code.
+Confirm the upstream SilentStriker license or obtain permission from the
+authors. Do not add a new license that conflicts with the rights of the upstream
+code.
 
 ## Responsible use
 

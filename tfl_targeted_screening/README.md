@@ -6,10 +6,10 @@ projection weights for bit flips that move a model toward a configured target
 answer while limiting degradation on an auxiliary task.
 
 The program simulates parameter-bit flips. It does not implement a physical
-fault-injection mechanism or a hardware protection system. Positions selected
-in every completed round are added to the search-blocking set; only rounds whose
-generated output reaches the target should be counted as effective attack
-results during analysis.
+fault-injection mechanism or a hardware protection system. Every position
+selected during a completed round is added to the search-blocking set and
+excluded from later rounds. The program reports these values as blocked bit
+positions rather than automatically labeling them as effective protection bits.
 
 ## Search scope
 
@@ -119,8 +119,8 @@ Each round produces `round_NNNN.json`, containing:
 
 `blocked_bits_latest.json` stores `[parameter_name, flattened_index, bit]`
 records and is used only to exclude previously tested positions from later
-searches. It should not be described as an effective protection set without
-checking the corresponding generated output.
+searches. It records blocked search positions rather than an automatically
+constructed effective protection set.
 
 ## Reproducibility notes
 
@@ -135,6 +135,6 @@ checking the corresponding generated output.
   target answer and keyword tokens, bit range, candidate limits, auxiliary
   samples, random seed, round range, and initial blocked-bit file. Every round
   JSON stores the complete command configuration used for that round.
-- Confirm the upstream TFL license before making a derivative repository
-  public. A private repository may be shared with a supervisor for review.
+- Confirm the upstream TFL license and redistribution terms before publishing
+  or redistributing modified upstream code.
 
